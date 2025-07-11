@@ -6,9 +6,13 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "clearvoice>=0.1.1",
+    "gammatone>=1.0.3",
     "jupyter>=1.1.1",
     "matplotlib>=3.10.3",
+    "museval>=0.4.1",
     "notebook>=7.4.3",
+    "onnxruntime>=1.22.1",
+    "resampy>=0.4.3",
     "scikit-learn>=1.6.1",
     "tensorboard>=2.19.0",
     "tensorboard-plugin-profile>=2.19.9",
