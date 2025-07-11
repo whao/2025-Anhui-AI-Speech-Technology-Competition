@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# datasets
+dataset/
+data/
+
+# Logs and temporary files
+feature_cache/
+*.npy
+
+profiler_log/
+
+# Checkpoint files
+*.ckpt
+*.pt
+*.pth
+checkpoints/
+
+# Visual Studio Code settings
+.vscode/
+.vscode-test/

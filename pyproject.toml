@@ -1,0 +1,35 @@
+[project]
+name = "2025-anhui-ai-speech-technology-competition"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "clearvoice>=0.1.1",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.3",
+    "notebook>=7.4.3",
+    "scikit-learn>=1.6.1",
+    "tensorboard>=2.19.0",
+    "tensorboard-plugin-profile>=2.19.9",
+    "torch>=2.7.1",
+    "torchaudio>=2.7.1",
+    "torchvision>=0.22.1",
+    "tqdm>=4.67.1",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchaudio = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
