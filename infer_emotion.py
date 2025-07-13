@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import librosa
 from emotion_cnn import EmotionCNN
-from emotion_bilstm import EmotionBiLSTM
+from emotion_bilstm import EmotionBiLSTMWithAttention
 from emotion_transformer import EmotionTransformer
 from emotion_dataset import EMOTION_LABELS
 
@@ -35,7 +35,7 @@ def load_model(model_type: str, model_path: str, device, max_len=300):
     if model_type == 'cnn':
         model = EmotionCNN(n_input=129)
     elif model_type == 'bilstm':
-        model = EmotionBiLSTM(input_dim=129)
+        model = EmotionBiLSTMWithAttention(input_dim=129)
     elif model_type == 'transformer':
         model = EmotionTransformer(input_dim=129, max_len=max_len)
     else:
