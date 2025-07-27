@@ -28,3 +28,12 @@ checkpoints/
 # Visual Studio Code settings
 .vscode/
 .vscode-test/
+
+# .env files
+.env
+.env.local
+.env.*.local
+.env.*.development.local
+.env.*.production.local
+.env.*.test.local
+.env.*
