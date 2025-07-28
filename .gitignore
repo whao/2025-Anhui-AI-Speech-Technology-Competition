@@ -37,3 +37,5 @@ checkpoints/
 .env.*.production.local
 .env.*.test.local
 .env.*
+
+bulk_data/

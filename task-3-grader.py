@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.responses import Response
 
 
 
@@ -69,29 +70,40 @@ ANSWER: dict = {
 
 # Create a local server to serve the FastAPI application. Receive the hash:emotion pair request and grade it
 # by checking if the hash exists in the ANSWER dictionary.
-# Request has to be in the length of 60 pairs of hash:emotion. And grade it once for all. Then return the result.
+# Request has to be in the length of 60 pairs of hash:emotion dictionary. And grade it once for all. Then return the result.
+# The request hash keys must match the keys in the ANSWER dictionary.
+# The result should be the number of correct answers and the total number of answers and percentage of correct answers.
 
 
 app = FastAPI()
 class EmotionRequest(BaseModel):
-    pairs: list[dict[str, str]]  # List of dictionaries with 'hash' and 'emotion' keys
+    answer: dict[str, str] # Expecting a dictionary of hash:emotion pairs
+    
 
 @app.post("/grade_emotion/")
 async def grade_emotion(request: EmotionRequest):
-    if len(request.pairs) != 60:
-        return {"error": "Invalid request length. Must be 60 pairs."}
+    """
+    评分接口，接收情感识别结果并进行评分
+    
+    Args:
+        request: 包含情感识别结果的请求体
+        
+    Returns:
+        Response: 返回评分结果
+    """
+    answer = request.answer
+    if len(answer) != 60:
+        return Response(content="Error: Expected 60 pairs of hash:emotion.", status_code=400)
+    
+    score = sum(1 for k, v in answer.items() if k in ANSWER and ANSWER[k] == v)
+    
+    total = len(ANSWER)
+    percentage = (score / total) * 100 if total > 0 else 0
+    return {
+        "score": score,
+        "total": total,
+        "percentage": percentage
+    }
 
-    results = {}
-    for pair in request.pairs:
-        hash_value = pair.get("hash")
-        emotion = pair.get("emotion")
-        if hash_value in ANSWER:
-            results[hash_value] = ANSWER[hash_value] == emotion
-
-    # Return the result percentage of correctness
-    correct_count = sum(results.values())
-    total_count = len(results)
-    percentage = (correct_count / total_count) * 100 if total_count > 0 else 0
-    return {"correct_count": correct_count, "total_count": total_count, "percentage": percentage}
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8060)
